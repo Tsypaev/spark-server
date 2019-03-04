@@ -1,9 +1,19 @@
-PROJECTNAME  := test-app
+MAVENIMAGENAME  := maven
+JAVAIMAGENAME  := java
+
 WORKDIR := /tmp
 
+BUILDERDOKERFILENAME := builder.Dockerfile
+LAUNCHERERDOKERFILENAME := launcher.Dockerfile
+
 buildproject:
-	@docker build --no-cache --build-arg WORKDIR=${WORKDIR} -t $(PROJECTNAME) .
-	@docker run --name $(PROJECTNAME) -t -d $(PROJECTNAME)
-	@docker cp $(PROJECTNAME):$(WORKDIR)/target .
-	@docker stop $(PROJECTNAME) && docker rm $(PROJECTNAME)
+	@docker build --no-cache --build-arg WORKDIR=${WORKDIR} -t $(MAVENIMAGENAME) -f $(BUILDERDOKERFILENAME) .
+	@docker run --name $(MAVENIMAGENAME) -t -d $(MAVENIMAGENAME)
+	@docker cp $(MAVENIMAGENAME):$(WORKDIR)/target .
+	@docker stop $(MAVENIMAGENAME) && docker rm $(MAVENIMAGENAME)
 .PHONY: buildproject
+
+launchproject:
+	@docker build --no-cache --build-arg WORKDIR=${WORKDIR} -t $(JAVAIMAGENAME) -f $(LAUNCHERERDOKERFILENAME) .
+	@docker run --name $(JAVAIMAGENAME) -t -p 4567:4567 -d $(JAVAIMAGENAME)
+.PHONY: launchproject
