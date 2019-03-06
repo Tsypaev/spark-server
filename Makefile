@@ -14,8 +14,8 @@ buildproject:
 	@docker stop $(MAVENIMAGENAME) && docker rm $(MAVENIMAGENAME)
 .PHONY: buildproject
 
-launchproject:
+pushimage:
 	@docker build --no-cache --build-arg WORKDIR=${WORKDIR} -t $(JAVAIMAGENAME) -f $(LAUNCHERERDOKERFILENAME) .
 	@docker tag java ${FINALIMAGENAME}
 	@docker push ${FINALIMAGENAME}
-.PHONY: launchproject
+.PHONY: pushimage
