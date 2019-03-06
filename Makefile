@@ -1,5 +1,6 @@
 MAVENIMAGENAME  := maven
 JAVAIMAGENAME  := java
+FINALIMAGENAME := tsypaev/test-app
 
 WORKDIR := /tmp
 
@@ -15,5 +16,6 @@ buildproject:
 
 launchproject:
 	@docker build --no-cache --build-arg WORKDIR=${WORKDIR} -t $(JAVAIMAGENAME) -f $(LAUNCHERERDOKERFILENAME) .
-	@docker run --name $(JAVAIMAGENAME) -t -p 4567:4567 -d $(JAVAIMAGENAME)
+	@docker tag java ${FINALIMAGENAME}
+	@docker push ${FINALIMAGENAME}
 .PHONY: launchproject
