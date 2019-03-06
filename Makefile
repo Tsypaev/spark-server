@@ -17,5 +17,6 @@ buildproject:
 pushimage:
 	@docker build --no-cache --build-arg WORKDIR=${WORKDIR} -t $(JAVAIMAGENAME) -f $(LAUNCHERERDOKERFILENAME) .
 	@docker tag java ${FINALIMAGENAME}
+	@docker log -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 	@docker push ${FINALIMAGENAME}
 .PHONY: pushimage
