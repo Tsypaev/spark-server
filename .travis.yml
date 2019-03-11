@@ -5,5 +5,7 @@ script:
 before_deploy:
 - echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin
 deploy:
+    provider: script
+    skip_cleanup: true
     script:
     - make pushimage
