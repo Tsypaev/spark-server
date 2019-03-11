@@ -4,5 +4,6 @@ script:
 - make buildproject
 before_deploy:
 - echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin
-script: 
-- make pushimage
+deploy:
+    script:
+    - make pushimage
